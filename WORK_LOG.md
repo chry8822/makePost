@@ -1,3 +1,18 @@
+## 2026-03-24 (4차)
+
+### 작업 내용
+- `make-post --version` 플래그 추가 (bin/makePost.js)
+- 글로벌 권한 설정 정리: `Bash(git*)`, `Bash(npm*)` 와일드카드로 통합
+- npm v1.0.3 배포
+
+### 결정사항
+- 버전 확인: `make-post --version` / `npx make-post --version` / `npm list -g make-post`
+
+### 다음 작업
+- 없음
+
+---
+
 ## 2026-03-24 (3차)
 
 ### 작업 내용
