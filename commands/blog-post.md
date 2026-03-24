@@ -190,10 +190,84 @@ tags: (티스토리 태그 5개)
 ---
 
 HTML 파일 조건:
-- 티스토리 HTML 편집기에 바로 붙여넣기 가능한 형식
-- h2, h3, p, pre, code, ul 태그 사용
-- 인라인 스타일 없이 순수 HTML 태그만
-- 코드 블록: <pre><code class="language-tsx"> 형식
+
+**출력 구조 — 파일 첫 줄은 반드시 `<link ...>`. `<!DOCTYPE>`, `<html>`, `<head>`, `<body>` 절대 금지.**
+
+```
+<link href="...Google Fonts...">
+<style>...</style>
+<div class="bp-wrap">...</div>
+<script>...</script>
+```
+
+**티스토리 CSS 충돌 방지 원칙:**
+- 모든 CSS는 `.bp-wrap` 하위 스코프로 한정 (전역 선택자 금지)
+- `position: fixed` 금지 → 토글 버튼은 `position: sticky; float: right`
+- 티스토리 자체 CSS에 덮이는 속성은 `!important` 필수:
+  - `p`, `h1~h6`, `li`, `strong` → `color !important`
+  - `.code-block`, `.code-block pre` → `background !important`
+  - `.code-block code`, `p code`, `li code` → `color !important`, `background !important`
+
+**CSS 변수 및 기본 스타일 (.bp-wrap 스코프):**
+```css
+.bp-wrap {
+  --bg: #0d0d0d; --bg2: #161616; --bg-code: #141414;
+  --tx: #f0f0f0; --tx2: #a0a0a0; --tm: #606060;
+  --ac: #7c6af5; --ac-s: rgba(124,106,245,0.12);
+  --bd: #2a2a2a; --cb: #2e2e2e;
+  background: var(--bg); color: var(--tx);
+  font-family: 'DM Sans', 'Noto Sans KR', sans-serif;
+  font-size: 17px; line-height: 1.9;
+  max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem;
+  animation: bp-fade 0.4s ease-out;
+}
+.bp-wrap[data-theme="light"] {
+  --bg: #fafaf8; --bg2: #f3f3f0; --bg-code: #f0f0ec;
+  --tx: #1a1a1a; --tx2: #555550; --tm: #999990;
+  --bd: #e0e0d8; --cb: #d8d8d0;
+}
+```
+
+**폰트:** 제목 `Instrument Serif`, 본문 `DM Sans`, 코드 `JetBrains Mono`
+```html
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+```
+
+**코드블록 패턴 (복사 버튼 — 큰따옴표 하나, 내부 JS는 작은따옴표):**
+```html
+<div class="code-block">
+  <div class="code-label">bash</div>
+  <button class="copy-btn" onclick="this.textContent='복사됨';setTimeout(()=>this.textContent='복사',800);navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">복사</button>
+  <pre><code>코드 내용</code></pre>
+</div>
+```
+
+**다크/라이트 토글 — `.bp-wrap` 기준으로 동작:**
+```html
+<button class="bp-toggle" onclick="const w=this.closest('.bp-wrap');const isLight=w.getAttribute('data-theme')==='light';isLight?w.removeAttribute('data-theme'):w.setAttribute('data-theme','light');this.textContent=isLight?'☾':'☀';localStorage.setItem('bp-theme',isLight?'dark':'light')">☾</button>
+```
+
+**초기화 스크립트 (파일 맨 끝):**
+```html
+<script>
+(function(){
+  const saved=localStorage.getItem('bp-theme');
+  const preferLight=window.matchMedia('(prefers-color-scheme: light)').matches;
+  const wrap=document.querySelector('.bp-wrap');
+  const btn=document.querySelector('.bp-toggle');
+  if(!wrap)return;
+  if(saved==='light'||(!saved&&preferLight)){wrap.setAttribute('data-theme','light');if(btn)btn.textContent='☀';}
+})();
+</script>
+```
+
+**절대 금지:**
+- `<!DOCTYPE>`, `<html>`, `<head>`, `<body>` 태그
+- 전역 선택자 (`p {}`, `h1 {}` 등 `.bp-wrap` 없이 단독 사용)
+- `position: fixed`
+- `!important` 누락 (`p`, `h1~h6`, `li`, `pre`, `code` 색상/배경)
+- Inter, Roboto, Arial, system-ui 폰트
+- 그라디언트 배경, `box-shadow` 2개 이상
 
 저장 완료 후 출력:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
