@@ -1,0 +1,19 @@
+{
+  "name": "make-post",
+  "version": "1.0.0",
+  "description": "Claude Code 전역 슬래시 커맨드 — SEO 최적화 블로그 포스팅 자동 생성기",
+  "bin": {
+    "make-post": "bin/makePost.js"
+  },
+  "files": [
+    "bin/",
+    "commands/"
+  ],
+  "keywords": [
+    "claude-code",
+    "blog",
+    "seo",
+    "slash-command"
+  ],
+  "license": "MIT"
+}
