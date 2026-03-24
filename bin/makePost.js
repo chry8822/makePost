@@ -4,6 +4,13 @@ const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
 
+const pkg = require('../package.json');
+
+if (process.argv[2] === '--version' || process.argv[2] === '-v') {
+  console.log(pkg.version);
+  process.exit(0);
+}
+
 const srcFile = path.join(__dirname, '..', 'commands', 'blog-post.md');
 const destDir = path.join(process.env.HOME || process.env.USERPROFILE, '.claude', 'commands');
 const destFile = path.join(destDir, 'blog-post.md');
