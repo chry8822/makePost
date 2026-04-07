@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Bash(gh auth:*)",
-      "Bash(gh repo:*)"
+      "Bash(gh repo:*)",
+      "Bash(node bin/makePost.js)",
+      "Bash(node \"C:/Users/USER/Desktop/chrys/makePost/bin/makePost.js\")",
+      "Bash(make-post --version)",
+      "Bash(npx make-post:*)"
     ]
   }
 }
