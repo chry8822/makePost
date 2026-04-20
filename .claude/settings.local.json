@@ -19,7 +19,9 @@
       "Read",
       "Edit",
       "Glob",
-      "Grep"
+      "Grep",
+      "Bash(node *)",
+      "Bash(python3 *)"
     ]
   }
 }
