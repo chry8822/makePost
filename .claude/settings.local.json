@@ -6,7 +6,20 @@
       "Bash(node bin/makePost.js)",
       "Bash(node \"C:/Users/USER/Desktop/chrys/makePost/bin/makePost.js\")",
       "Bash(make-post --version)",
-      "Bash(npx make-post:*)"
+      "Bash(npx make-post:*)",
+      "Bash(claude config:*)",
+      "Bash(claude whoami:*)",
+      "Bash(claude auth:*)",
+      "Bash(rm -rf blog-output/.draft)",
+      "Bash(mkdir -p blog-output/.draft)",
+      "WebSearch",
+      "WebFetch",
+      "Agent",
+      "Write(blog-output/*)",
+      "Read",
+      "Edit",
+      "Glob",
+      "Grep"
     ]
   }
 }
