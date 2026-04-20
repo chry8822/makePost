@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.8] - 2026-04-20
+
+### 티스토리 렌더링 수정
+- **Google Fonts 로딩 방식 변경** — `<link rel="stylesheet">` → `@import url(...)` (`<style>` 블록 첫 줄)
+  - 티스토리가 포스트 본문의 `<link>` 태그를 무시해 폰트가 적용되지 않던 문제 해결
+- **margin/padding `!important` 추가** — `p`, `ul`, `ol`, `li`, `.lead`, `.meta`
+  - 티스토리 자체 CSS가 `p { margin: 0 }`, `ul/ol { margin: 0; padding: 0 }` 으로 리셋해 단락 간 개행이 사라지던 문제 해결
+- **악센트 컬러 기본값 퍼플 제거** — `commands/blog-post.md`의 `--ac: #7c6af5` 삭제, 주제별 선택 가이드로 교체
+
+---
+
 ## [1.0.7] - 2026-04-20
 
 ### 성능 개선

@@ -172,13 +172,20 @@ tags: [태그 배열]
 
 **티스토리 CSS 충돌 방지 — `!important` 필수 적용 대상:**
 
-티스토리는 `p`, `h1~h6`, `li`, `pre`, `code` 등에 자체 색상/배경을 직접 선택자로 적용한다.
-`.bp-wrap`의 `color`는 상속되지 않으므로 아래 속성은 반드시 `!important`를 붙인다:
+티스토리는 `p`, `h1~h6`, `li`, `ul`, `ol`, `pre`, `code` 등에 자체 색상/배경/여백을 직접 선택자로 적용한다.
+색상뿐 아니라 **margin, padding도 티스토리에 덮이므로** 아래 속성은 반드시 `!important`를 붙인다:
 
 ```css
 /* 텍스트 색상 — 티스토리 p/h/li 색상에 덮이지 않도록 */
 .bp-wrap p, .bp-wrap li, .bp-wrap h3 { color: var(--tx) !important; }
 .bp-wrap h1, .bp-wrap h2 { color: var(--tx) !important; }
+
+/* 여백 — 티스토리 p { margin: 0 }, ul/ol { margin: 0; padding: 0 } 리셋에 덮이지 않도록 */
+.bp-wrap p { margin: 0 0 var(--sp-md) !important; }
+.bp-wrap ul, .bp-wrap ol { margin: 0 0 var(--sp-md) !important; padding-left: 1.4rem !important; }
+.bp-wrap li { margin-bottom: var(--sp-xs) !important; }
+.bp-wrap .lead { margin: 0 0 var(--sp-lg) !important; }
+.bp-wrap .meta { margin: 0 0 var(--sp-lg) !important; }
 
 /* 코드 배경 — 티스토리 pre/code 흰색 배경에 덮이지 않도록 */
 .bp-wrap .code-block { background: var(--bg-code) !important; }
@@ -192,13 +199,13 @@ tags: [태그 배열]
 
 ### 출력 구조 (항상 이 순서)
 
-파일의 첫 줄은 반드시 `<link ...>` 태그여야 한다.
+파일의 첫 줄은 반드시 `<style>` 태그여야 한다. `<link>` 태그는 티스토리가 무시할 수 있으므로 사용 금지.
 `<!DOCTYPE>`, `<html>`, `<head>`, `<body>` 로 시작하면 절대 안 된다.
 
 ```html
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
 .bp-wrap { ... }
 .bp-wrap[data-theme="light"] { ... }
 /* 모든 하위 선택자는 .bp-wrap 으로 시작 */
@@ -507,7 +514,7 @@ onclick 속성은 반드시 큰따옴표 하나로만 감싼다.
   color: var(--tx2) !important;
   border-left: 3px solid var(--ac);
   padding-left: 1rem;
-  margin: 0 0 2rem;
+  margin: 0 0 2rem !important;
   line-height: 1.85;
 }
 
@@ -554,3 +561,5 @@ onclick 속성은 반드시 큰따옴표 하나로만 감싼다.
 - 인라인 `style` 속성 사용 — CSS 변수나 색상이 `!important` 없이 인라인에 들어가면 티스토리에 덮임. 클래스로 처리할 것
 - 테이블을 `.table-wrap` 없이 직접 사용 — 모바일에서 레이아웃 파괴
 - `@media (max-width: 480px)` 생략 — 모바일 대응 미디어쿼리는 필수
+- `<link rel="stylesheet">` 로 Google Fonts 로드 — 티스토리가 `<link>` 태그를 무시함. 반드시 `@import url(...)` 을 `<style>` 블록 첫 줄에 넣는다
+- `p`, `ul`, `ol`, `li`, `.lead`, `.meta` 의 `margin`/`padding` 에 `!important` 누락 — 티스토리가 `p { margin: 0 }`, `ul { padding: 0 }` 으로 리셋해 개행이 사라짐

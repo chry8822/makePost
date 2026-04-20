@@ -342,11 +342,13 @@ tags: (티스토리 태그 5개)
 
 HTML 파일 조건:
 
-**출력 구조 — 파일 첫 줄은 반드시 `<link ...>`. `<!DOCTYPE>`, `<html>`, `<head>`, `<body>` 절대 금지.**
+**출력 구조 — 파일 첫 줄은 반드시 `<style>`. `<link>` 태그는 티스토리가 무시하므로 사용 금지. `<!DOCTYPE>`, `<html>`, `<head>`, `<body>` 절대 금지.**
 
 ```
-<link href="...Google Fonts...">
-<style>...</style>
+<style>
+@import url('...Google Fonts...');
+...
+</style>
 <div class="bp-wrap">...</div>
 <script>...</script>
 ```
@@ -356,6 +358,7 @@ HTML 파일 조건:
 - `position: fixed` 금지 → 토글 버튼은 `position: sticky; float: right`
 - 티스토리 자체 CSS에 덮이는 속성은 `!important` 필수:
   - `p`, `h1~h6`, `li`, `strong` → `color !important`
+  - `p`, `ul`, `ol`, `li` → `margin !important`, `padding !important` (티스토리가 `p { margin: 0 }`, `ul { padding: 0 }` 로 리셋함 — 개행이 사라지는 원인)
   - `.code-block`, `.code-block pre` → `background !important`
   - `.code-block code`, `p code`, `li code` → `color !important`, `background !important`
 
@@ -364,7 +367,7 @@ HTML 파일 조건:
 .bp-wrap {
   --bg: #0d0d0d; --bg2: #161616; --bg-code: #141414;
   --tx: #f0f0f0; --tx2: #a0a0a0; --tm: #606060;
-  --ac: #7c6af5; --ac-s: rgba(124,106,245,0.12);
+  --ac: [주제 분위기에 맞는 단색 — 퍼플/바이올렛/제네릭블루 금지, 앰버·틸·세이지 등 선택]; --ac-s: rgba(r,g,b,0.11);
   --bd: #2a2a2a; --cb: #2e2e2e;
   background: var(--bg); color: var(--tx);
   font-family: 'DM Sans', 'Noto Sans KR', sans-serif;
@@ -379,9 +382,10 @@ HTML 파일 조건:
 }
 ```
 
-**폰트:** 제목 `Instrument Serif`, 본문 `DM Sans`, 코드 `JetBrains Mono`
-```html
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+**폰트:** 제목 `Instrument Serif`, 본문 `DM Sans` (weight 300/400/500/600), 코드 `JetBrains Mono`
+```css
+/* <style> 블록 첫 줄에 반드시 @import 로 로드 — <link> 태그 금지 */
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 ```
 
 **코드블록 패턴 (복사 버튼 — 큰따옴표 하나, 내부 JS는 작은따옴표):**
