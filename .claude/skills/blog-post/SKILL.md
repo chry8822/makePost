@@ -52,8 +52,10 @@ Step 1 결과를 바탕으로 아래 형식으로 `blog-output/.draft/analysis.m
 ```md
 ## 메타
 - slug: [영문 소문자 + 하이픈. 예: github-actions-cicd-pipeline]
+- 제목: [포스팅 제목 한국어 전체. 파일명에 사용됨]
 - 읽기 시간: [N분]
 - 타겟 독자: [정의] / pain point: [1줄]
+- 제목 포맷 참고: "한국어(English): ~하는 방법 / ~원인과 해결" 패턴은 SEO에 유리하므로 자연스럽게 어울리면 고려한다 (강제 아님)
 
 ## Thesis Statement
 [이 글이 주장하는 핵심 1문장]
@@ -135,13 +137,14 @@ Step 1 결과를 바탕으로 아래 형식으로 `blog-output/.draft/analysis.m
 1. 에이전트 1 실행 → `blog-output/.draft/analysis.md` 생성 확인
 2. 에이전트 2 실행 → `blog-output/.draft/draft.md` 생성 확인
 3. 에이전트 3 실행 → `blog-output/.draft/final.md` 생성 확인
-4. `blog-output/.draft/analysis.md` Read → slug, SEO 키워드, 읽기 시간 추출
+4. `blog-output/.draft/analysis.md` Read → 제목, SEO 키워드, 읽기 시간 추출
 5. `blog-output/.draft/final.md` Read → 최종 마크다운 내용 추출
 
 **파일 생성**
 
 6. frontmatter 추가 후 마크다운 저장:
-   - 파일명: `blog-output/[YYYY-MM-DD]-[slug].md` (slug는 analysis.md에서 읽은 값 그대로 사용)
+   - 파일명: `blog-output/[포스팅 제목]-[YYYY-MM-DD].md`
+   - [포스팅 제목]은 analysis.md의 제목 필드 그대로. 공백은 하이픈(-)으로, 특수문자(:·/\|)는 제거
 
 ```
 ---
@@ -154,7 +157,8 @@ tags: [태그 배열]
 ```
 
 7. 아래 HTML 디자인 명세에 따라 티스토리용 HTML 생성
-   - 파일명: `blog-output/[YYYY-MM-DD]-[slug].html`
+   - 파일명: `blog-output/[포스팅 제목]-[YYYY-MM-DD].html`
+   - [포스팅 제목]은 마크다운 파일명과 동일한 방식으로 정규화
 
 8. `blog-output/.draft/` 폴더 삭제
 
